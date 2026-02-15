@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Para Ti ❤️</title>
+
+
+<style>
+
+/* BODY */
+
+body{
+
+margin:0;
+font-family: Arial;
+color:white;
+text-align:center;
+overflow-x:hidden;
+background: linear-gradient(45deg,#ff4e50,#fc913a);
+min-height:100vh;
+
+}
+
+
+/* TEXTO SUPERIOR */
+
+.san-valentin{
+
+margin-top:20px;
+
+font-size:25px;
+
+font-weight:bold;
+
+color:white;
+
+text-shadow:
+0 0 10px white,
+0 0 20px red,
+0 0 30px red;
+
+animation: latido 1.5s infinite;
+
+}
+
+
+@keyframes latido{
+
+0%{transform:scale(1);}
+50%{transform:scale(1.1);}
+100%{transform:scale(1);}
+
+}
+
+
+
+/* CORAZONES */
+
+.corazon{
+
+position:fixed;
+top:-10px;
+font-size:24px;
+animation: caer linear infinite;
+z-index:0;
+
+}
+
+@keyframes caer{
+
+0%{
+transform:translateY(0);
+opacity:1;
+}
+
+100%{
+transform:translateY(110vh);
+opacity:0;
+}
+
+}
+
+
+
+/* CONTENEDOR */
+
+.container{
+
+margin-top:20px;
+background: rgba(0,0,0,0.3);
+padding:20px;
+border-radius:15px;
+width:90%;
+max-width:400px;
+margin-left:auto;
+margin-right:auto;
+position:relative;
+z-index:1;
+
+}
+
+
+
+/* BOTON */
+
+button{
+
+padding:15px 30px;
+font-size:18px;
+border:none;
+border-radius:10px;
+background:white;
+color:red;
+cursor:pointer;
+
+}
+
+
+
+/* CARTA */
+
+.carta{
+
+margin-top:20px;
+font-size:20px;
+display:none;
+
+}
+
+
+
+/* MENSAJE */
+
+#mensajeFotos{
+
+margin-top:20px;
+display:none;
+
+}
+
+
+
+/* GALERIA */
+
+.galeria{
+
+display:flex;
+justify-content:center;
+gap:10px;
+flex-wrap:wrap;
+margin-top:20px;
+
+}
+
+
+
+/* FOTO NORMAL */
+
+.foto{
+
+width:100px;
+height:140px;
+object-fit:cover;
+border-radius:10px;
+background:white;
+padding:4px;
+display:none;
+opacity:0;
+transition:1s;
+
+}
+
+.foto.mostrar{
+
+display:block;
+opacity:1;
+
+}
+
+
+
+/* FOTO FINAL */
+
+.foto-final{
+
+width:100%;
+max-width:350px;
+margin-top:20px;
+margin-left: auto;
+margin-right: auto;
+display: block;
+
+border-radius:15px;
+background:white;
+padding:5px;
+display:none;
+opacity:0;
+transition:1.5s;
+
+}
+
+.foto-final.mostrar{
+
+display:block;
+opacity:1;
+
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+
+
+<!-- TEXTO SUPERIOR -->
+
+<h2 class="san-valentin">
+
+ERES TU MI SAN VALENTIN ♥
+
+</h2>
+
+
+
+<!-- CONTENEDOR -->
+
+<div class="container">
+
+
+<h1>💌 Tengo algo para ti 💌</h1>
+
+
+
+<button onclick="abrirCarta(event)" id="boton">
+
+Abrir Carta
+
+</button>
+
+
+
+<div id="carta" class="carta">
+
+
+
+<p id="texto"></p>
+
+
+
+<p id="mensajeFotos">
+
+📸 Toca la pantalla para ver nuestras fotos
+
+</p>
+
+
+
+<div class="galeria">
+
+<img src="foto1.jpg" class="foto">
+<img src="foto2.jpeg" class="foto">
+<img src="foto3.jpeg" class="foto">
+<img src="foto4.jpeg" class="foto">
+<img src="foto5.jpeg" class="foto">
+<img src="foto6.jpeg" class="foto">
+
+</div>
+
+
+
+<img src="foto.jpeg" class="foto-final" id="fotoFinal">
+
+
+
+</div>
+
+
+</div>
+
+
+
+<audio id="musica" loop>
+
+<source src="musica.mp3" type="audio/mpeg">
+
+</audio>
+
+
+
+<script>
+
+
+/* TEXTO */
+
+var texto="Desde que llegaste a mi vida, todo es más bonito. Gracias por existir, gracias por hacerme feliz. Te quiero mucho ❤️";
+
+var i=0;
+
+
+
+/* FOTOS */
+
+var fotos;
+
+var fotoFinal;
+
+var fotoActual=0;
+
+var permitirFotos=false;
+
+
+
+function escribir(){
+
+if(i<texto.length){
+
+document.getElementById("texto").innerHTML+=texto.charAt(i);
+
+i++;
+
+setTimeout(escribir,50);
+
+}
+
+else{
+
+document.getElementById("mensajeFotos").style.display="block";
+
+permitirFotos=true;
+
+}
+
+}
+
+
+
+/* ABRIR */
+
+function abrirCarta(event){
+
+event.stopPropagation();
+
+document.getElementById("carta").style.display="block";
+
+document.getElementById("boton").style.display="none";
+
+document.getElementById("musica").play();
+
+fotos=document.querySelectorAll(".foto");
+
+fotoFinal=document.getElementById("fotoFinal");
+
+escribir();
+
+}
+
+
+
+/* MOSTRAR */
+
+document.addEventListener("click",function(){
+
+if(!permitirFotos)return;
+
+
+
+if(fotoActual<fotos.length){
+
+fotos[fotoActual].classList.add("mostrar");
+
+fotoActual++;
+
+}
+
+else if(fotoActual==fotos.length){
+
+fotoFinal.classList.add("mostrar");
+
+fotoActual++;
+
+}
+
+});
+
+
+
+/* CORAZONES */
+
+function crearCorazon(){
+
+var corazon=document.createElement("div");
+
+corazon.className="corazon";
+
+corazon.innerHTML="❤️";
+
+corazon.style.left=Math.random()*100+"vw";
+
+corazon.style.animationDuration=(Math.random()*3+3)+"s";
+
+document.body.appendChild(corazon);
+
+
+setTimeout(()=>corazon.remove(),6000);
+
+}
+
+
+setInterval(crearCorazon,300);
+
+
+
+</script>
+
+
+
+</body>
+</html>
